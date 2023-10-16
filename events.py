@@ -1,3 +1,4 @@
+from collections import deque
 
 class Event(object):
     # An interface for subsequent Event classes
@@ -15,7 +16,7 @@ class SignalEvent(Event):
     # Parameters:
     # datetime - YYYYMMDD HHMMSS format, date and time the order is made
     # symbol - symbol being traded
-    # signal = 'long' or 'short'
+    # signal = 'long' or 'short'Ppac
     # strength = strength of the signal
     def __init__(self, datetime, symbol, signal, strength):
         self.type = 'signal'
@@ -38,7 +39,7 @@ class OrderEvent(Event):
         self.symbol = symbol
         self.quantity = quantity
         self.direction = direction
-    
+
     # Displays values involved with the order
     def print_order(self):
         print(f"Order: Symbol = {self.symbol}, Quantity = {self.quantity}, Direction = {self.direction}")
