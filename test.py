@@ -1,7 +1,14 @@
 from datahandler import *
+from collections import deque
 
-filepath = './historical_data/EURUSD2022.csv'
+symbols = ['TSLA', 'RIVN']
 
-data = HistoricalData(filepath)
-print(data.get_next())
-print(data.get_next())
+start_date = '2023-09-20'
+data_handler = HistoricalDataHandler(start_date, start_date, symbols)
+print(data_handler.data['TSLA'].curr()['high'])
+
+test = deque()
+
+for i in range(15):
+	data_handler.next_date()
+print(data_handler.datetime)

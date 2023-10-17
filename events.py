@@ -7,8 +7,11 @@ class Event(object):
 class MarketEvent(Event):
     # Handles event of receiving a new market update
 
-    def __init__(self):
+    def __init__(self, date, symbol, data):
         self.type = 'market'
+        self.date = date
+        self.symbol = symbol
+        self.data = data
 
 class SignalEvent(Event):
     # Handles event of type signal

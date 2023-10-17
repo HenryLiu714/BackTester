@@ -6,7 +6,7 @@ from events import *
 class Strategy(ABC):
 
     # Method to update the event queue (i.e. create an order event) given the current event queue
-    # Given an event (from the Event queue), can return either an order it would like to make or none
+    # Given an event and the current event queue, can add a SignalEvent to the event queue
     @abstractmethod
     def update(self, event: Event) -> Event | None:
         pass
