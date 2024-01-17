@@ -8,7 +8,9 @@
 #include "datetime.h"
 #include "entry.h"
 
-HistoricalCSVHandler::HistoricalCSVHandler(std::string symbol, std::string filepath) {
+HistoricalCSVHandler::HistoricalCSVHandler(std::string symbol, std::string file_dir) {
+    std::string filepath = file_dir + "/" + symbol + ".csv";
+    
     data[symbol].open(filepath);
 
     if (data[symbol].fail()) {
@@ -21,12 +23,13 @@ HistoricalCSVHandler::HistoricalCSVHandler(std::string symbol, std::string filep
     }
 }
 
-HistoricalCSVHandler::HistoricalCSVHandler(std::vector<std::string> symbols, std::vector<std::string> filepaths) {
+HistoricalCSVHandler::HistoricalCSVHandler(std::vector<std::string> symbols, std::string file_dir) {
     for (int i = 0; i < symbols.size(); i++) {
-        data[symbols[i]].open(filepaths[i]);
+        std::string filepath = file_dir + "/" + symbols[i] + ".csv";
+        data[symbols[i]].open(filepath);
 
         if (data[symbols[i]].fail()) {
-            std::cerr << "Unable to open file " << filepaths[i] << std::endl;
+            std::cerr << "Unable to open file " << filepath << std::endl;
         }
 
         if (data[symbols[i]].peek() > '9') {

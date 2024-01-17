@@ -8,6 +8,7 @@
 
 #include "datetime.h"
 #include "entry.h"
+#include "event.h"
 
 #include <unordered_map>
 
@@ -43,10 +44,11 @@ class HistoricalCSVHandler {
     private: 
         std::unordered_map<std::string, std::ifstream> data;
         std::unordered_map<std::string, std::vector<Entry*>> entries;
+        std::vector<Event> events;
 
     public:
-        HistoricalCSVHandler(std::string symbol, std::string filepath);
-        HistoricalCSVHandler(std::vector<std::string> symbols, std::vector<std::string> filepaths);
+        HistoricalCSVHandler(std::string symbol, std::string file_dir);
+        HistoricalCSVHandler(std::vector<std::string> symbols, std::string file_dir);
 
         /**
          * Adds a new bar to the Handler, unless the end of csv file is reached
