@@ -1,8 +1,13 @@
 #include <iostream>
 
 #include "event.h"
+#include "datetime.h"
+#include "datahandler.h"
 
 int main() {
-    std::cout << "hello";
+    HistoricalCSVHandler h = HistoricalCSVHandler("TSLA", "./historical_data/TSLA.csv");
+    Entry* e = h.add_new_bar("TSLA");
+
+    std::cout << e->to_string();
     return 0;
 }

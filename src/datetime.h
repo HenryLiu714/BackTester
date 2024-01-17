@@ -16,6 +16,8 @@ class Datetime {
         Datetime(int day_, int month_, int year_);
         Datetime(int sec_, int min_, int hr_, int day_, int month_, int year_);
         Datetime(std::string date);
+        
+        std::string to_string();
 };
 
 #endif
