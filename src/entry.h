@@ -8,7 +8,7 @@
 class Entry {
     public:
         std::string symbol;
-        Datetime date;
+        Datetime* date;
 
         double open_price;
         double high_price;
@@ -18,7 +18,7 @@ class Entry {
 
         long volume;
 
-        Entry(std::string symbol_id_, Datetime date_, double open, double high, double low, double close, double adj, long volume_);
+        Entry(std::string symbol_id_, Datetime* date_, double open, double high, double low, double close, double adj, long volume_);
 
         std::string to_string();
 };

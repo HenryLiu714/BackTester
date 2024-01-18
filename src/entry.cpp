@@ -1,7 +1,7 @@
 #include "entry.h"
 #include "datetime.h"
 
-Entry::Entry(std::string symbol_id_, Datetime date_, double open, double high, double low, double close, double adj, long volume_) {
+Entry::Entry(std::string symbol_id_, Datetime* date_, double open, double high, double low, double close, double adj, long volume_) {
     symbol = symbol_id_;
     date = date_;
     open_price = open;
@@ -14,7 +14,7 @@ Entry::Entry(std::string symbol_id_, Datetime date_, double open, double high, d
 
 std::string Entry::to_string() {
             return "Symbol: " + symbol + "\n"
-            "Datetime: " + date.to_string() + "\n"
+            "Datetime: " + date->to_string() + "\n"
             "Open: " + std::to_string(open_price) +  "\n"
             "High: " + std::to_string(high_price) +  "\n"
             "Low: " + std::to_string(low_price) +  "\n"

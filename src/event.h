@@ -11,11 +11,11 @@ enum Order {MKT, LMT}; // Market or limit order
 class Event {
     public:
         std::string type;
-        Datetime datetime;
+        Datetime* datetime;
 
         // Constructor
         Event();
-        Event(std::string type_, Datetime datetime_);
+        Event(std::string type_, Datetime* datetime_);
         Event(std::string type_, std::string datetime_);
 };
 
@@ -27,7 +27,7 @@ class Event {
 class MarketEvent : public Event {
     public:
         // Constructor
-        MarketEvent(Datetime datetime_);
+        MarketEvent(Datetime* datetime_);
 };
 
 /**
@@ -43,7 +43,7 @@ class SignalEvent : public Event {
         int strength;
 
         // Constructor
-        SignalEvent(std::string id_, std::string ticker_, Datetime timestamp_, bool direction_, int strength_);
+        SignalEvent(std::string id_, std::string ticker_, Datetime* timestamp_, bool direction_, int strength_);
 };
 
 class OrderEvent : public Event {
@@ -53,7 +53,7 @@ class OrderEvent : public Event {
         int quantity;
         bool direction;
 
-        OrderEvent(std::string symbol_, bool order_type_, int quantity_, Datetime timestamp, bool direction_);
+        OrderEvent(std::string symbol_, bool order_type_, int quantity_, Datetime* timestamp, bool direction_);
         void print_order();
 };
 
@@ -65,7 +65,7 @@ class FillEvent : public Event {
         double fill_cost;
         double commission;
 
-        FillEvent(std::string symbol_, int quantity_, bool direction_, double fill_cost_, Datetime datetime_, double commission_);
+        FillEvent(std::string symbol_, int quantity_, bool direction_, double fill_cost_, Datetime* datetime_, double commission_);
 };
 
 #endif

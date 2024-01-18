@@ -21,7 +21,7 @@ class DataHandler {
         */
         virtual std::vector<Entry*> get_latest_bars(std::string symbol, int N=1) = 0;
 
-        virtual Datetime get_latest_datetime(std::string symbol) = 0;
+        virtual Datetime* get_latest_datetime(std::string symbol) = 0;
 
         /**
          * @param val - One of "OPEN", "CLOSE", "HIGH", "LOW", "ADJ"
@@ -61,7 +61,7 @@ class HistoricalCSVHandler {
 
         std::vector<Entry*> get_latest_bars(std::string symbol, int N=1);
 
-        Datetime get_latest_datetime(std::string symbol);
+        Datetime* get_latest_datetime(std::string symbol);
 
         double get_latest_bar_val(std::string symbol, std::string val);
 

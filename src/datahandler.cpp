@@ -68,8 +68,75 @@ Entry* HistoricalCSVHandler::add_new_bar(std::string symbol) {
     getline(data[symbol], new_entry);
     std::vector<std::string> values = split_string(new_entry, ",");
 
-    Entry* e = new Entry(symbol, Datetime(values[0]), std::stod(values[1]), std::stod(values[2]), std::stod(values[3]), std::stod(values[4]), std::stod(values[5]), std::stol(values[6]));
+    Entry* e = new Entry(symbol, new Datetime(values[0]), std::stod(values[1]), std::stod(values[2]), std::stod(values[3]), std::stod(values[4]), std::stod(values[5]), std::stol(values[6]));
 
     entries[symbol].push_back(e);
     return e;
+}
+
+Entry* HistoricalCSVHandler::get_latest_bar(std::string symbol) {
+    if (entries.find(symbol) == entries.end()) {
+        std::cerr << "Symbol not found " << symbol << std::endl;
+        return NULL;
+    }
+
+    return entries[symbol].back();
+}
+
+std::vector<Entry*> HistoricalCSVHandler::get_latest_bars(std::string symbol, int N) {
+    if (entries.find(symbol) == entries.end()) {
+        std::cerr << "Symbol not found " << symbol << std::endl;
+        return std::vector<Entry*>();
+    }
+
+    N = std::min((int) entries[symbol].size(), N);
+
+    std::vector<Entry*> v;
+    for (int i = entries[symbol].size() - N; i < entries[symbol].size(); i++) {
+        v.push_back(entries[symbol][i]);
+    }
+    
+    return v;
+}
+
+Datetime* HistoricalCSVHandler::get_latest_datetime(std::string symbol) {
+    if (entries.find(symbol) == entries.end()) {
+        std::cerr << "Symbol not found " << symbol << std::endl;
+        return NULL;
+    }
+    
+    return entries[symbol].back()->date;
+}
+
+double get_bar_val(Entry* e, std::string val) {
+    if (val == "OPEN") return e->open_price;
+    if (val == "HIGH") return e->high_price;
+    if (val == "LOW") return e->low_price;
+    if (val == "CLOSE") return e->close_price;
+    if (val == "ADJ") return e->adj_close_price;
+    if (val == "VOLUME") return e->volume;
+    throw std::invalid_argument("Invalid argument val");
+}
+
+double HistoricalCSVHandler::get_latest_bar_val(std::string symbol, std::string val) {
+    Entry* e = this->get_latest_bar(symbol);
+
+    if (e == NULL) {
+        throw std::logic_error("Invalid Entry");
+    }
+
+    return get_bar_val(e, val);
+}
+
+std::vector<double> HistoricalCSVHandler::get_latest_bar_vals(std::string symbol, std::string val, int N) {
+    std::vector<Entry*> v = this->get_latest_bars(symbol, N);
+    
+    std::vector<double> vals;
+
+    for (auto e : v) {
+        if (e == NULL) throw std::logic_error("Invalid Entry");
+        vals.push_back(get_bar_val(e, val));
+    }
+
+    return vals;
 }
