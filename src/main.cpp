@@ -3,13 +3,15 @@
 #include "event.h"
 #include "datetime.h"
 #include "datahandler.h"
+#include "performance.h"
 
 void HistoricalCSVHandlerTests() {
+    std::deque<Event*> event_queue;
     std::vector<std::string> symbols = {"RIVN", "TSLA"};
-    HistoricalCSVHandler h = HistoricalCSVHandler(symbols, "./historical_data");
+    HistoricalCSVHandler h = HistoricalCSVHandler(symbols, "./historical_data", &event_queue);
 
     for (int i = 0; i < 10; i++) {
-        h.add_new_bar("TSLA");
+        h.update_bars("TSLA");
     }
 
     Entry* e = h.get_latest_bar("TSLA");
@@ -21,6 +23,9 @@ void HistoricalCSVHandlerTests() {
     for (auto a : v) {
         std::cout << a->to_string();
     }
+
+    std::cout << event_queue.size() << "\n";
+    std::cout << event_queue[0]->type;
 
     std::cout << "\n\n";
 }
@@ -39,8 +44,9 @@ void EventTests() {
 }
 
 void BarValTests() {
+    std::deque<Event*> event_queue;
     std::vector<std::string> symbols = {"RIVN", "TSLA"};
-    HistoricalCSVHandler h = HistoricalCSVHandler(symbols, "./historical_data");
+    HistoricalCSVHandler h = HistoricalCSVHandler(symbols, "./historical_data", &event_queue);
 
     for (int i = 0; i < 10; i++) {
         h.add_new_bar("TSLA");
@@ -56,10 +62,15 @@ void BarValTests() {
     std::cout << "\n\n";
 }
 
+void PerformanceTests() {
+    std::vector<double> v = {1, 2, 3};
+
+    std::cout << create_sharpe_ratio(v, 3);
+}
+
 int main() {
 
-    BarValTests();
-    EventTests();
+    PerformanceTests();
 
     return 0;
 }

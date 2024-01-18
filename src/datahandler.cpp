@@ -3,12 +3,13 @@
 #include <stdexcept>
 #include <iostream>
 #include <fstream>
+#include <deque>
 
 #include "datahandler.h"
 #include "datetime.h"
 #include "entry.h"
 
-HistoricalCSVHandler::HistoricalCSVHandler(std::string symbol, std::string file_dir) {
+HistoricalCSVHandler::HistoricalCSVHandler(std::string symbol, std::string file_dir, std::deque<Event*>* events_) {
     std::string filepath = file_dir + "/" + symbol + ".csv";
     
     data[symbol].open(filepath);
@@ -21,9 +22,12 @@ HistoricalCSVHandler::HistoricalCSVHandler(std::string symbol, std::string file_
         std::string a;
         std::getline(data[symbol], a);
     }
+
+    events = events_;
+    continue_backtest = 1;
 }
 
-HistoricalCSVHandler::HistoricalCSVHandler(std::vector<std::string> symbols, std::string file_dir) {
+HistoricalCSVHandler::HistoricalCSVHandler(std::vector<std::string> symbols, std::string file_dir, std::deque<Event*>* events_) {
     for (int i = 0; i < symbols.size(); i++) {
         std::string filepath = file_dir + "/" + symbols[i] + ".csv";
         data[symbols[i]].open(filepath);
@@ -37,6 +41,9 @@ HistoricalCSVHandler::HistoricalCSVHandler(std::vector<std::string> symbols, std
             std::getline(data[symbols[i]], a);
         }
     }
+
+    events = events_;
+    continue_backtest = 1;
 } 
 
 std::vector<std::string> split_string(std::string s, std::string delim) {
@@ -139,4 +146,17 @@ std::vector<double> HistoricalCSVHandler::get_latest_bar_vals(std::string symbol
     }
 
     return vals;
+}
+
+void HistoricalCSVHandler::update_bars(std::string symbol) {
+    if (continue_backtest) {
+        Entry* e = add_new_bar(symbol);
+
+        if (e == NULL) {
+            continue_backtest = 0;
+            return;
+        }
+
+        events->push_back(new MarketEvent(e->date));
+    }
 }
