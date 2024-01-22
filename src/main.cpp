@@ -4,6 +4,7 @@
 #include "datetime.h"
 #include "datahandler.h"
 #include "performance.h"
+#include "portfolio.h"
 
 void HistoricalCSVHandlerTests() {
     std::deque<Event*> event_queue;
@@ -68,9 +69,29 @@ void PerformanceTests() {
     std::cout << create_sharpe_ratio(v, 3);
 }
 
-int main() {
+void PortfolioConstrTests() {
+    std::deque<Event*> event_queue;
+    std::vector<std::string> symbols = {"RIVN", "TSLA"};
+    HistoricalCSVHandler h = HistoricalCSVHandler(symbols, "./historical_data", &event_queue);
+    Datetime d = Datetime("2024-01-20 10:12:55");
+    Portfolio p = Portfolio(&h, &event_queue, &d);
 
-    PerformanceTests();
+    h.update_bars("TSLA");
+    h.update_bars("RIVN");
+
+    FillEvent* f = new FillEvent("TSLA", 25, LONG, 20, &d, 11);
+    p.update_fill(f);
+    p.print_holdings();
+
+    h.update_bars("TSLA");
+    p.update_time_index();
+    p.print_holdings();
+
+    std::cout <<"\n\n";
+}
+
+int main() {
+    PortfolioConstrTests();
 
     return 0;
 }

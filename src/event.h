@@ -5,7 +5,7 @@
 
 #include "datetime.h"
 
-enum Direction {LONG, SHORT};
+enum Direction {LONG, SHORT, EXIT};
 enum Order {MKT, LMT}; // Market or limit order
 
 class Event {
@@ -39,11 +39,11 @@ class SignalEvent : public Event {
     public:
         std::string id;
         std::string ticker;
-        bool direction;
+        int direction;
         int strength;
 
         // Constructor
-        SignalEvent(std::string id_, std::string ticker_, Datetime* timestamp_, bool direction_, int strength_);
+        SignalEvent(std::string id_, std::string ticker_, Datetime* timestamp_, int direction_, int strength_);
 };
 
 class OrderEvent : public Event {

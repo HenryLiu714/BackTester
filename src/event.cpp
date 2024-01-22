@@ -25,7 +25,7 @@ MarketEvent::MarketEvent(Datetime* datetime_) {
     datetime = datetime_;
 }
 
-SignalEvent::SignalEvent(std::string id_, std::string ticker_, Datetime* timestamp_, bool direction_, int strength_) {
+SignalEvent::SignalEvent(std::string id_, std::string ticker_, Datetime* timestamp_, int direction_, int strength_) {
     type = "SIGNAL";
     id = id_;
     ticker = ticker_;

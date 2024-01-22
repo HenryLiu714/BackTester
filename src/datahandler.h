@@ -20,6 +20,8 @@
  */
 class DataHandler {
     public:
+        std::vector<std::string> symbols_list;
+
         /**
          * Generates the latest bar of data for a given symbol
          * @param  symbol    : The symbol or key representing the data wanted
@@ -63,10 +65,10 @@ class DataHandler {
          * Pushes the latest bars to the bars_queue for the symbol in a 
          * tuple format (vector) of (symbol, datetime, open, high, low, close, volume)
         */
-        virtual void update_bars() = 0;
+        virtual void update_bars(std::string symbol) = 0;
 };
 
-class HistoricalCSVHandler {
+class HistoricalCSVHandler : public DataHandler {
     private: 
         std::unordered_map<std::string, std::ifstream> data;
         std::unordered_map<std::string, std::vector<Entry*>> entries;

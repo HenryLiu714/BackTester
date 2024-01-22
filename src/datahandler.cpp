@@ -16,11 +16,17 @@ HistoricalCSVHandler::HistoricalCSVHandler(std::string symbol, std::string file_
 
     if (data[symbol].fail()) {
         std::cerr << "Unable to open file " << filepath << std::endl;
+        throw std::invalid_argument("Invalid filepath");
     }
 
-    if (data[symbol].peek() > '9') {
-        std::string a;
-        std::getline(data[symbol], a);
+    else {
+        symbols_list.push_back(symbol);
+        entries[symbol] = {};
+
+        if (data[symbol].peek() > '9') {
+            std::string a;
+            std::getline(data[symbol], a);
+        }
     }
 
     events = events_;
@@ -34,11 +40,16 @@ HistoricalCSVHandler::HistoricalCSVHandler(std::vector<std::string> symbols, std
 
         if (data[symbols[i]].fail()) {
             std::cerr << "Unable to open file " << filepath << std::endl;
+            throw std::invalid_argument("Invalid filepath");
         }
 
-        if (data[symbols[i]].peek() > '9') {
-            std::string a;
-            std::getline(data[symbols[i]], a);
+        else {
+            symbols_list.push_back(symbols[i]);
+            entries[symbols[i]] = {};
+            if (data[symbols[i]].peek() > '9') {
+                std::string a;
+                std::getline(data[symbols[i]], a);
+            }
         }
     }
 
@@ -63,8 +74,7 @@ std::vector<std::string> split_string(std::string s, std::string delim) {
 
 Entry* HistoricalCSVHandler::add_new_bar(std::string symbol) {
     if (data.find(symbol) == data.end()) {
-        std::cerr << "Symbol not in data" << std::endl;
-        return NULL;
+        throw std::invalid_argument("Symbol not in symbols list: " + symbol);
     }
 
     if (data[symbol].peek() == EOF) {
@@ -83,20 +93,29 @@ Entry* HistoricalCSVHandler::add_new_bar(std::string symbol) {
 
 Entry* HistoricalCSVHandler::get_latest_bar(std::string symbol) {
     if (entries.find(symbol) == entries.end()) {
-        std::cerr << "Symbol not found " << symbol << std::endl;
+        throw std::invalid_argument("Symbol not in symbols list: " + symbol);
         return NULL;
     }
+
+    if (entries[symbol].size() == 0) {
+        throw std::invalid_argument("Symbol has no entries yet: " + symbol);
+        return NULL;
+    } 
 
     return entries[symbol].back();
 }
 
 std::vector<Entry*> HistoricalCSVHandler::get_latest_bars(std::string symbol, int N) {
     if (entries.find(symbol) == entries.end()) {
-        std::cerr << "Symbol not found " << symbol << std::endl;
+        throw std::invalid_argument("Symbol not in symbols list: " + symbol);
         return std::vector<Entry*>();
     }
 
     N = std::min((int) entries[symbol].size(), N);
+
+    if (N == 0) {
+        throw std::invalid_argument("Symbol has no entries yet: " + symbol);
+    }
 
     std::vector<Entry*> v;
     for (int i = entries[symbol].size() - N; i < entries[symbol].size(); i++) {
@@ -108,7 +127,7 @@ std::vector<Entry*> HistoricalCSVHandler::get_latest_bars(std::string symbol, in
 
 Datetime* HistoricalCSVHandler::get_latest_datetime(std::string symbol) {
     if (entries.find(symbol) == entries.end()) {
-        std::cerr << "Symbol not found " << symbol << std::endl;
+        throw std::invalid_argument("Symbol not in symbols list: " + symbol);
         return NULL;
     }
     

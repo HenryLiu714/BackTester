@@ -32,7 +32,7 @@ Datetime::Datetime(int sec_, int min_, int hr_, int day_, int month_, int year_)
 /**
  * @param date Date in standard format YYYY-MM-DD hh:mm:ss, with hms optional
 */
-Datetime::Datetime(std::string date) {
+Datetime::Datetime(const std::string& date) {
     year = stoi(date.substr(0, 4));
     month = stoi(date.substr(5, 2));
     day = stoi(date.substr(8, 2));
