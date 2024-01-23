@@ -21,6 +21,7 @@
 class DataHandler {
     public:
         std::vector<std::string> symbols_list;
+        bool continue_backtest;
 
         /**
          * Generates the latest bar of data for a given symbol
@@ -75,7 +76,6 @@ class HistoricalCSVHandler : public DataHandler {
         std::deque<Event*>* events;
 
     public:
-        bool continue_backtest;
         HistoricalCSVHandler(std::string symbol, std::string file_dir, std::deque<Event*>* events_);
         HistoricalCSVHandler(std::vector<std::string> symbols, std::string file_dir, std::deque<Event*>* events_);
 

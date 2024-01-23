@@ -5,6 +5,8 @@
 #include "datahandler.h"
 #include "performance.h"
 #include "portfolio.h"
+#include "strategy.h"
+#include "backtest.h"
 
 void HistoricalCSVHandlerTests() {
     std::deque<Event*> event_queue;
@@ -90,8 +92,14 @@ void PortfolioConstrTests() {
     std::cout <<"\n\n";
 }
 
-int main() {
-    PortfolioConstrTests();
+void BacktestTests() {
+    SampleStrategy* s = new SampleStrategy();
+    Datetime* d = new Datetime("2018-10-16");
+    Backtest b = Backtest("TSLA", d, s);
+    b.run_backtest();
+}
 
+int main() {
+    BacktestTests();
     return 0;
 }

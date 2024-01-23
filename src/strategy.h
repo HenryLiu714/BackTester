@@ -4,11 +4,14 @@
 #include "event.h"
 
 class Strategy {
-    
-    /**
-     *  Should provide all necessary mechanisms for calculating signals
-     */
-    virtual SignalEvent* calculate_signals();
+    public:
+        /**
+         *  Should provide all necessary mechanisms for calculating signals
+         */
+        virtual SignalEvent* calculate_signals() = 0;
 };
 
+class SampleStrategy : public Strategy {
+    SignalEvent* calculate_signals();
+};
 #endif

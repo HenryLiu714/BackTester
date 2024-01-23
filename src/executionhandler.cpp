@@ -1,7 +1,9 @@
 #include "executionhandler.h"
 
+#include <iostream>
+
 SimulationExecutionHandler::SimulationExecutionHandler(std::deque<Event*>* events_) {
-    events = events;
+    events = events_;
 }
 
 void SimulationExecutionHandler::execute_order(Event* e) {
@@ -9,6 +11,5 @@ void SimulationExecutionHandler::execute_order(Event* e) {
         OrderEvent* o = (OrderEvent*) e;
         FillEvent* f = new FillEvent(o->symbol, o->quantity, o->direction, 0, o->datetime, 0);
         events->push_back(f);
-        delete o;
     }
 }
