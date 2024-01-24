@@ -95,7 +95,7 @@ void PortfolioConstrTests() {
 void BacktestTests() {
     SampleStrategy* s = new SampleStrategy();
     Datetime* d = new Datetime("2018-10-16");
-    Backtest b = Backtest("TSLA", d, s, 100000, 0, 1000);
+    Backtest b = Backtest("TSLA", d, s, 100000, 100, 100);
     b.simulate_trading();
 }
 

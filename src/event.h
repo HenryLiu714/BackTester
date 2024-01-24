@@ -8,6 +8,9 @@
 enum Direction {LONG, SHORT, EXIT};
 enum Order {MKT, LMT}; // Market or limit order
 
+/**
+ * Abstract base class for events
+*/
 class Event {
     public:
         std::string type;
@@ -26,7 +29,11 @@ class Event {
 */
 class MarketEvent : public Event {
     public:
-        // Constructor
+        /**
+         * MarketEvent constructor
+         * 
+         * @param  datetime_ : Datetime of the MarketEvent
+         */
         MarketEvent(Datetime* datetime_);
 };
 
@@ -42,7 +49,15 @@ class SignalEvent : public Event {
         int direction;
         int strength;
 
-        // Constructor
+        /**
+         * SignalEvent constructor
+         * 
+         * @param  id_        : Symbol ID in case of use with SQL database
+         * @param  ticker_    : Ticker symbol of the security
+         * @param  timestamp_ : Datetime pointer of time signal was generated
+         * @param  direction_ : Direction of signal, either LONG, SHORT, EXIT (0, 1, 2)
+         * @param  strength_  : Strength of signal
+         */
         SignalEvent(std::string id_, std::string ticker_, Datetime* timestamp_, int direction_, int strength_);
 };
 
@@ -52,8 +67,21 @@ class OrderEvent : public Event {
         bool order_type;
         int quantity;
         bool direction;
-
+        
+        /**
+         * OrderEvent constructor
+         * 
+         * @param  symbol_     : Ticker symbol of the security
+         * @param  order_type_ : Type of order, either MKT or LMT (0, 1)
+         * @param  quantity_   : Quantity of security being ordered
+         * @param  timestamp   : Datetime of the transaction
+         * @param  direction_  : Direction of order, LONG or SHORT (0, 1) 
+         */
         OrderEvent(std::string symbol_, bool order_type_, int quantity_, Datetime* timestamp, bool direction_);
+        
+        /**
+         * Prints a string representation of the order to the terminal
+         */
         void print_order();
 };
 
@@ -64,7 +92,17 @@ class FillEvent : public Event {
         bool direction;
         double fill_cost;
         double commission;
-
+        
+        /**
+         * FillEvent constructor
+         * 
+         * @param  symbol_     : Symbol being filled
+         * @param  quantity_   : Quantity of security being filled
+         * @param  direction_  : Direction of fill, either LONG or SHORT
+         * @param  fill_cost_  : Cost of fill
+         * @param  datetime_   : Datetime of transaction
+         * @param  commission_ : Fill commission in percent of total fill cost
+         */
         FillEvent(std::string symbol_, int quantity_, bool direction_, double fill_cost_, Datetime* datetime_, double commission_);
 };
 

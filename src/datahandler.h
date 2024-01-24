@@ -76,7 +76,22 @@ class HistoricalCSVHandler : public DataHandler {
         std::deque<Event*>* events;
 
     public:
+        /**
+         * HistoricalCSVHandler constructor using one symbol
+         * 
+         * @param  symbol   : The symbol name, should match .csv file in directory
+         * @param  file_dir : Directory of the .csv files, default "./historical_data"
+         * @param  events_  : Event queue to add events into 
+         */
         HistoricalCSVHandler(std::string symbol, std::string file_dir, std::deque<Event*>* events_);
+        
+        /**
+         * HistoricalCSVHandler constructor with multiple symbols
+         * 
+         * @param  symbols  : The ticker symbol names for all symbols =
+         * @param  file_dir : Directory of the .csv files, default "./historical_data"
+         * @param  events_  : Event queue to add events into 
+         */
         HistoricalCSVHandler(std::vector<std::string> symbols, std::string file_dir, std::deque<Event*>* events_);
 
         /**

@@ -35,16 +35,38 @@ class Portfolio {
 
         std::unordered_map<std::string, int> positions;
         std::unordered_map<std::string, double> holdings;
-
+        /**
+         * Portfolio constructor
+         * 
+         * @param  bars_                   : DataHandler object 
+         * @param  events_                 : Event queue to add or remove events from
+         * @param  start_date_             : Starting date of the trades
+         * @param  initial_capital_        : Starting capital, default 100000 
+         */
         Portfolio(DataHandler* bars_, std::deque<Event*>* events_, Datetime* start_date_, double initial_capital_=100000);
-
+        
+        /**
+         * Updates the time index by checking the current prices and changing portfolio balance and value
+         */
         void update_time_index();
-
+        
+        /**
+         * Updates the portfolio from a given FillEvent
+         * @param  e : FillEvent object indicating a fill
+         */
         void update_fill(Event* e);
-
+        
+        /**
+         * Checks a signal and updates the portfolio correspondingly by possibly making an order
+         * @param  e : SignalEvent pointer indicating a signal from a strategy
+         */
         void update_signal(Event* e);
-
+        
+        /**
+         * Prints the current holdings of the portfolio
+         */
         void print_holdings();
+        
 };
 
 #endif
