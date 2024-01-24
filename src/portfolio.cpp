@@ -45,6 +45,7 @@ void Portfolio::update_time_index() {
         }
 
         value = total_value + balance;
+        date = latest_datetime;
 }
 
 void Portfolio::update_positions(FillEvent* f) {
@@ -57,18 +58,11 @@ void Portfolio::update_holdings(FillEvent* f) {
         update_positions(f);
 
         // Update holdings
-        double total_value = 0;
+        double market_value = bars->get_latest_bar_val(f->symbol, "ADJ");
+        double orig_holding = holdings[f->symbol];
+        holdings[f->symbol] = positions[f->symbol] * market_value;
 
-        for (const std::string& s : bars->symbols_list) {
-                // Approximation for market value
-                double market_value = bars->get_latest_bar_val(s, "ADJ");
-                
-                holdings[s] = positions[s] * market_value;
-                total_value += holdings[s];
-        }
-
-        balance -= total_value;
-        value = total_value + balance;
+        balance += orig_holding - holdings[f->symbol];
 }
 
 void Portfolio::update_fill(Event* e) {

@@ -2,8 +2,10 @@
 
 #include <stdlib.h>
 #include <iostream>
+#include <time.h>
 
 SignalEvent* SampleStrategy::calculate_signals() {
+    srand(time(NULL));
     int i = rand() % 2;
 
     if (i == 1) {

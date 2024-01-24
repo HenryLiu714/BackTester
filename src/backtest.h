@@ -18,7 +18,9 @@ class Backtest {
     Datetime* datetime;
     DataHandler* data_handler;
     ExecutionHandler* execution_handler;
+    double initial_capital;
     int heartbeat;
+    int max_trading_periods;
 
     int signals;
     int orders;
@@ -27,11 +29,11 @@ class Backtest {
         Backtest(
             const std::vector<std::string>& symbols_list_, Portfolio* portfolio_,
             Datetime* start_date_, DataHandler* data_handler_, ExecutionHandler* execution_handler_,
-            Strategy* strategy_, double initial_capital = 100000, int heartbeat_ = 0
+            Strategy* strategy_, double initial_capital_ = 100000, int heartbeat_ = 0, int max_trading_periods_ = 1000
         );
 
         Backtest(const std::string& symbol, Datetime* start_date_,
-            Strategy* strategy_, double initial_capital = 100000, int heartbeat_ = 1000,
+            Strategy* strategy_, double initial_capital_ = 100000, int heartbeat_ = 1000, int max_trading_periods_ = 1000,
             const std::string& csv_path = "./historical_data");
 
         void run_backtest();
