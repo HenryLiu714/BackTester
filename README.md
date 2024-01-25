@@ -10,3 +10,4 @@ class found in **datahandler.h**, and doing so will allow the user to use differ
 #### Backtesting a Strategy
 Calling `make` in the terminal will generate the necessary **backtester.exe** program, which can be run to demonstrate the strategy.
 
+[a link](https://github.com/HenryLiu714/BackTester/blob/main/documentation/html/index.html)
