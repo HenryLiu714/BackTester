@@ -9,4 +9,3 @@ The securities used for the backtester are located in the **./historical_data** 
 class found in **datahandler.h**, and doing so will allow the user to use different forms of data, whether that be alternative historical data (ex. MySQL database) or live trading data. 
 #### Backtesting a Strategy
 Calling `make` in the terminal will generate the necessary **backtester.exe** program, which can be run to demonstrate the strategy.
-
