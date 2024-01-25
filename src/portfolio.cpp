@@ -62,7 +62,22 @@ void Portfolio::update_holdings(FillEvent* f) {
         double orig_holding = holdings[f->symbol];
         holdings[f->symbol] = positions[f->symbol] * market_value;
 
-        balance += orig_holding - holdings[f->symbol];
+        double total_cost = orig_holding - holdings[f->symbol];
+        balance += total_cost;
+
+        // Commission fee
+        balance -= abs(total_cost) * (f->commission);
+
+        double total_value = 0;
+        for (const std::string& s : bars->symbols_list) {
+                // Approximation for market value
+                double market_value = bars->get_latest_bar_val(s, "ADJ");
+
+                holdings[s] = (double) positions[s] * market_value;
+                total_value += holdings[s];
+        }
+
+        value = total_value + balance;
 }
 
 void Portfolio::update_fill(Event* e) {
@@ -72,7 +87,8 @@ void Portfolio::update_fill(Event* e) {
 }
 
 OrderEvent* Portfolio::generate_naive_order(SignalEvent* e) {
-        int mkt_quantity = 100;
+        double cur_price = bars->get_latest_bar_val(e->ticker, "ADJ");
+        int mkt_quantity = balance / cur_price;
         int cur_quantity = positions[e->ticker];
         bool order_type = MKT;
 

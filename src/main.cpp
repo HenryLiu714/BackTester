@@ -93,9 +93,9 @@ void PortfolioConstrTests() {
 }
 
 void BacktestTests() {
-    SampleStrategy* s = new SampleStrategy();
+    MovingAverageCrossover* s = new MovingAverageCrossover(10, 20);
     Datetime* d = new Datetime("2018-10-16");
-    Backtest b = Backtest("TSLA", d, s, 100000, 100, 100);
+    Backtest b = Backtest("TSLA", d, s, 100000, 0, 1000);
     b.simulate_trading();
 }
 

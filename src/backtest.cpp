@@ -7,7 +7,7 @@
 Backtest::Backtest(
             const std::vector<std::string>& symbols_list_, Portfolio* portfolio_,
             Datetime* start_date_, DataHandler* data_handler_, ExecutionHandler* execution_handler_,
-            Strategy* strategy_, double initial_capital_, int heartbeat_, int max_trading_periods_) {
+            Strategy* strategy_, double initial_capital_, int heartbeat_, int max_trading_periods_, double commission_) {
                 symbols_list = symbols_list_;
                 strategy = strategy_;
                 datetime = start_date_;
@@ -17,6 +17,7 @@ Backtest::Backtest(
                 max_trading_periods = max_trading_periods_;
                 initial_capital = initial_capital_;
                 portfolio = portfolio_;
+                commission = commission_;
 
                 signals = 0;
                 orders = 0;
@@ -24,7 +25,7 @@ Backtest::Backtest(
 
 Backtest::Backtest(
             const std::string& symbol, Datetime* start_date_,
-            Strategy* strategy_, double initial_capital_, int heartbeat_, int max_trading_periods_,
+            Strategy* strategy_, double initial_capital_, int heartbeat_, int max_trading_periods_, double commission_,
             const std::string& csv_path) {
                 symbols_list = {symbol};
                 datetime = start_date_;
@@ -32,11 +33,12 @@ Backtest::Backtest(
                 initial_capital = initial_capital_;
                 max_trading_periods = max_trading_periods_;
                 strategy = strategy_;
+                commission = commission_;
 
                 std::deque<Event*>* events = new std::deque<Event*>();
                 
                 data_handler = new HistoricalCSVHandler(symbol, csv_path, events);
-                execution_handler = new SimulationExecutionHandler(events);
+                execution_handler = new SimulationExecutionHandler(events, commission);
                 portfolio = new Portfolio(data_handler, events, start_date_, initial_capital);
         
                 signals = 0;
@@ -60,7 +62,7 @@ void Backtest::run_backtest() {
             }
 
             else if (event->type == "MARKET") {
-                events->push_back(strategy->calculate_signals());
+                events->push_back(strategy->calculate_signals(data_handler));
                 portfolio->update_time_index();
             }
 

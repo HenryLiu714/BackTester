@@ -19,13 +19,14 @@ class ExecutionHandler {
 class SimulationExecutionHandler : public ExecutionHandler {
     public:
         std::deque<Event*>* events;
+        double commission;
         
         /**
          * SimulationExecutionHandler constructor
          * 
          * @param events_ : Event queue to add FillEvent into
          */
-        SimulationExecutionHandler(std::deque<Event*>* events_);
+        SimulationExecutionHandler(std::deque<Event*>* events_, double commission_);
         
         /**
          * Executes an OrderEvent by adding the corresponding FillEvent

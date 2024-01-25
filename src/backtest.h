@@ -21,6 +21,7 @@ class Backtest {
     double initial_capital;
     int heartbeat;
     int max_trading_periods;
+    double commission;
 
     int signals;
     int orders;
@@ -42,7 +43,7 @@ class Backtest {
         Backtest(
             const std::vector<std::string>& symbols_list_, Portfolio* portfolio_,
             Datetime* start_date_, DataHandler* data_handler_, ExecutionHandler* execution_handler_,
-            Strategy* strategy_, double initial_capital_ = 100000, int heartbeat_ = 0, int max_trading_periods_ = 1000
+            Strategy* strategy_, double initial_capital_ = 100000, int heartbeat_ = 0, int max_trading_periods_ = 1000, double commission_ = 0.02
         );
 
         /**
@@ -56,7 +57,7 @@ class Backtest {
          * @param  max_trading_periods_ : Maximum number of trading periods 
          */
         Backtest(const std::string& symbol, Datetime* start_date_,
-            Strategy* strategy_, double initial_capital_ = 100000, int heartbeat_ = 1000, int max_trading_periods_ = 1000,
+            Strategy* strategy_, double initial_capital_ = 100000, int heartbeat_ = 1000, int max_trading_periods_ = 1000, double commission_ = 0.02,
             const std::string& csv_path = "./historical_data");
         
         /**
