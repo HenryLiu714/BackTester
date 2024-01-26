@@ -31,6 +31,7 @@ class MovingAverageCrossover : public Strategy {
     private:
         int n1;
         int n2;
+        std::string symbol;
         bool over;
     public:
         /**
@@ -39,7 +40,7 @@ class MovingAverageCrossover : public Strategy {
          * @param  n1 : First period
          * @param  n2 : Second period (typically longer than first)
          */
-        MovingAverageCrossover(int n1_, int n2_);
+        MovingAverageCrossover(int n1_, int n2_, std::string symbol_);
         
         /**
          * Calculate signals with the given moving crossover periods,

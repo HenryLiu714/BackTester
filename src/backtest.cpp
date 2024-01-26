@@ -49,9 +49,13 @@ void Backtest::run_backtest() {
     int counter = 0;
     std::deque<Event*>* events = portfolio->events;
 
+    for (auto s : data_handler->symbols_list) {
+        data_handler->update_bars(s);
+        while (datetime->is_after(data_handler->get_latest_datetime(s)))
+            data_handler->update_bars(s);
+    }
+
     while (counter < max_trading_periods && data_handler->continue_backtest) {
-        std::cout << "Day " << counter << std::endl;
-        data_handler->update_bars("TSLA");
 
         while (!events->empty()) {
             Event* event = events->front();
@@ -82,9 +86,12 @@ void Backtest::run_backtest() {
             }
         }
 
-        portfolio->print_holdings();
         counter++;
         std::this_thread::sleep_for(std::chrono::milliseconds(heartbeat));
+
+        for (auto s : data_handler->symbols_list) {
+            data_handler->update_bars(s);
+        }
     }
 }
 

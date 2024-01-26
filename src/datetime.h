@@ -45,7 +45,18 @@ class Datetime {
          */
         Datetime(const std::string& date);
         
+        /**
+         * Returns a string formatted version of the current Datetime
+         * @return {std::string}  : The string
+         */
         std::string to_string();
+        
+        /**
+         * Compares with another Datetime 
+         * @param  d       : The other Datetime
+         * @return {bool}  : True if after, false if not
+         */
+        bool is_after(Datetime* d);
 };
 
 #endif

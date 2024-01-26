@@ -58,3 +58,19 @@ std::string Datetime::to_string() {
     std::to_string(min) + ":" +
     std::to_string(sec);
 }
+
+bool Datetime::is_after(Datetime* d) {
+    if (year > d->year) return 1;
+    if (year < d->year) return 0;
+    if (month > d->month) return 1;
+    if (month < d->month) return 0;
+    if (day > d->day) return 1;
+    if (day < d->day) return 0;
+    if (hr > d->hr) return 1;
+    if (hr < d->hr) return 0;
+    if (min > d->min) return 1;
+    if (min < d->min) return 0;
+    if (sec > d->sec) return 1;
+    if (sec < d->sec) return 0;
+    return 0;
+}

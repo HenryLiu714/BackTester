@@ -19,24 +19,25 @@ SignalEvent* SampleStrategy::calculate_signals(DataHandler* bars) {
     }
 }
 
-MovingAverageCrossover::MovingAverageCrossover(int n1_, int n2_) {
+MovingAverageCrossover::MovingAverageCrossover(int n1_, int n2_, std::string symbol_) {
     n1 = n1_;
     n2 = n2_;
+    symbol = symbol_;
     over = 0;
 }
 
 SignalEvent* MovingAverageCrossover::calculate_signals(DataHandler* bars) {
-    int avg1 = arithmetic_mean(bars->get_latest_bar_vals("TSLA", "ADJ", n1));
-    int avg2 = arithmetic_mean(bars->get_latest_bar_vals("TSLA", "ADJ", n2));
+    double avg1 = arithmetic_mean(bars->get_latest_bar_vals(symbol, "ADJ", n1));
+    double avg2 = arithmetic_mean(bars->get_latest_bar_vals(symbol, "ADJ", n2));
 
     if (over && (avg1 < avg2)) {
         over = 0;
-        return new SignalEvent("TSLA", "TSLA", bars->get_latest_datetime("TSLA"), EXIT, 1);
+        return new SignalEvent(symbol, symbol, bars->get_latest_datetime(symbol), EXIT, 1);
     }
 
     else if (!over && (avg1 > avg2)) {
         over = 1;
-        return new SignalEvent("TSLA", "TSLA", bars->get_latest_datetime("TSLA"), LONG, 1);
+        return new SignalEvent(symbol, symbol, bars->get_latest_datetime(symbol), LONG, 1);
     }
 
     return NULL;
