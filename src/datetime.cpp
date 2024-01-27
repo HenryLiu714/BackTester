@@ -59,6 +59,29 @@ std::string Datetime::to_string() {
     std::to_string(sec);
 }
 
+std::string Datetime::to_string_day() {
+    if (month < 10 && day > 9) {
+        return std::to_string(year) + "-0" + 
+        std::to_string(month) + "-" +
+        std::to_string(day);
+    }
+
+    else if (month > 9 && day < 10) {
+        return std::to_string(year) + "-" + 
+        std::to_string(month) + "-0" +
+        std::to_string(day);
+    }
+
+    else if (month < 10 && day < 10) {
+        return std::to_string(year) + "-0" + 
+        std::to_string(month) + "-0" +
+        std::to_string(day);
+    }
+    return std::to_string(year) + "-" + 
+    std::to_string(month) + "-" +
+    std::to_string(day);
+}
+
 bool Datetime::is_after(Datetime* d) {
     if (year > d->year) return 1;
     if (year < d->year) return 0;

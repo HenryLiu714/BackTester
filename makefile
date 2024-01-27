@@ -4,7 +4,7 @@ SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp, %.o, $(SRC_FILES))
 
 backtester: $(OBJ_FILES)
-	g++ $(OBJ_FILES) -o backtester
+	g++ $(OBJ_FILES) -o backtester 
 
 %.o: $(SRC_DIR)/%.cpp
 	g++ -c $(SRC_FILES)

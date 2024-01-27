@@ -93,9 +93,9 @@ void PortfolioConstrTests() {
 }
 
 void BacktestTests() {
-    MovingAverageCrossover* s = new MovingAverageCrossover(20, 40, "GOOG");
+    MovingAverageCrossover* s = new MovingAverageCrossover(5, 10, "TSLA");
     Datetime* d = new Datetime("2004-12-16");
-    Backtest b = Backtest("GOOG", d, s, 100000, 0, 10000, 0.02);
+    Backtest b = Backtest("TSLA", d, s, 100000, 0, 1000, 0.002);
     b.simulate_trading();
 }
 

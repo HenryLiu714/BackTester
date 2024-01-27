@@ -52,6 +52,12 @@ class Datetime {
         std::string to_string();
         
         /**
+         * Returns a string formatted version of the current Datetime without hours, minutes, or seconds
+         * @return {std::string}  : The string
+         */
+        std::string to_string_day();
+        
+        /**
          * Compares with another Datetime 
          * @param  d       : The other Datetime
          * @return {bool}  : True if after, false if not

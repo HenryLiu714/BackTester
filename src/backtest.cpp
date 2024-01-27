@@ -3,6 +3,8 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <fstream>
+
 
 Backtest::Backtest(
             const std::vector<std::string>& symbols_list_, Portfolio* portfolio_,
@@ -18,6 +20,7 @@ Backtest::Backtest(
                 initial_capital = initial_capital_;
                 portfolio = portfolio_;
                 commission = commission_;
+                equities = std::vector<std::pair<std::string, double>>();
 
                 signals = 0;
                 orders = 0;
@@ -34,6 +37,7 @@ Backtest::Backtest(
                 max_trading_periods = max_trading_periods_;
                 strategy = strategy_;
                 commission = commission_;
+                equities = std::vector<std::pair<std::string, double>>();
 
                 std::deque<Event*>* events = new std::deque<Event*>();
                 
@@ -56,7 +60,6 @@ void Backtest::run_backtest() {
     }
 
     while (counter < max_trading_periods && data_handler->continue_backtest) {
-
         while (!events->empty()) {
             Event* event = events->front();
             events->pop_front();
@@ -87,12 +90,24 @@ void Backtest::run_backtest() {
         }
 
         counter++;
+        equities.push_back(std::pair<std::string, double>(portfolio->date->to_string_day(), portfolio->value));
         std::this_thread::sleep_for(std::chrono::milliseconds(heartbeat));
 
         for (auto s : data_handler->symbols_list) {
             data_handler->update_bars(s);
         }
     }
+}
+
+void Backtest::write_equity_curve() {
+    std::ofstream myFile("./output/equity_curve.csv");
+    
+    myFile << "Date,Equity" << std::endl;
+    for (std::pair<std::string, double> p : equities) {
+        myFile << p.first << "," << p.second << std::endl;
+    }
+
+    myFile.close();
 }
 
 void Backtest::output_performance() {
@@ -102,6 +117,8 @@ void Backtest::output_performance() {
     std::cout << "Final Balance: \t" << portfolio->value << std::endl;
     std::cout << "Overall Performance: \t" << ((portfolio->value - initial_capital) / initial_capital) * 100 << "% change" << std::endl << std::endl;
     std::cout << portfolio->date->to_string();
+    write_equity_curve();
+    std::system("python ./scripts/generate_equity_curve.py");
 }
 
 void Backtest::simulate_trading () {
