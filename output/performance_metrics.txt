@@ -1,0 +1,17 @@
+Trading Strategy Overview
+-------------------------------
+
+Start Date:                 2018-10-16
+End Date:                   2022-10-05
+Starting Balance:           100000
+Final Balance:              513703
+Overall Performance [%]:    413.703
+Equity Initial [$]:         100000
+Equity Final [$]:           513703
+Equity Change [$]:          413703
+Maximum Equity [$]:         755570
+Minimum Equity [$]:         63125.6
+Maximum Drawdown [%]:       -50.8595
+Maximum Drawdown Duration:  290 days
+Average Annual Return [%]:  81.723
+Sharpe Ratio:               1.61968
