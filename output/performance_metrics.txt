@@ -1,3 +1,4 @@
+
 Trading Strategy Overview
 -------------------------------
 
@@ -15,3 +16,4 @@ Maximum Drawdown [%]:       -50.8595
 Maximum Drawdown Duration:  290 days
 Average Annual Return [%]:  81.723
 Sharpe Ratio:               1.61968
+
