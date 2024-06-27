@@ -57,8 +57,10 @@ void Backtest::run_backtest() {
 
     for (auto s : data_handler->symbols_list) {
         data_handler->update_bars(s);
-        while (datetime->is_after(data_handler->get_latest_datetime(s)))
+        while (datetime->is_after(data_handler->get_latest_datetime(s))) {
             data_handler->update_bars(s);
+        }
+            
     }
 
     datetime = data_handler->get_latest_datetime(data_handler->symbols_list[0]);
@@ -99,11 +101,15 @@ void Backtest::run_backtest() {
 
         for (auto s : data_handler->symbols_list) {
             data_handler->update_bars(s);
+            if (counter % 100 == 0) std::cout << "Currently trading on: " << data_handler->get_latest_datetime(s)->to_string() << std::endl;
         }
     }
+
+    std::cout << "Done backtesting trades" << "\n" << "-------------------------------" << "\n\n";
 }
 
 void Backtest::write_equity_curve() {
+    std::cout << "Writing output files..." << "\n";
     std::ofstream myFile("./output/equity_curve.csv");
     
     myFile << "Date,Equity" << std::endl;
@@ -112,6 +118,7 @@ void Backtest::write_equity_curve() {
     }
 
     myFile.close();
+    std::cout << "Exporting equity curve..." << "\n";
     std::system("python ./scripts/generate_equity_curve.py");
 }
 
@@ -152,6 +159,9 @@ double annual_return(int days, double total_return) {
 
 void Backtest::output_performance() {
     write_equity_curve();
+
+    std::cout << "Loading backtest results..." << "\n" << "-------------------------------" << "\n\n";
+    
     std::vector<double> drawdowns = get_metrics(equities);
     double annual = annual_return(equities.size(), portfolio->value / initial_capital);
 

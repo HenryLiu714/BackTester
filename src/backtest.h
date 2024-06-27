@@ -11,6 +11,9 @@
 #include "portfolio.h"
 #include "strategy.h"
 
+/**
+ * Class to run backtests on historical data
+*/
 class Backtest {
     std::vector<std::string> symbols_list;
     Portfolio* portfolio;
