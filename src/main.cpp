@@ -22,6 +22,9 @@ void runBacktest() {
 
 int main() {
     // runTests();
+    std::vector<std::string> tickers = {"TSLA", "SPY"};
+    HistoricalCSVHandler::update_data(tickers);
+    
     runBacktest();
     return 0;
 }

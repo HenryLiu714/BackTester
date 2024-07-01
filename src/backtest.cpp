@@ -55,6 +55,8 @@ void Backtest::run_backtest() {
     int counter = 0;
     std::deque<Event*>* events = portfolio->events;
 
+    HistoricalCSVHandler::update_data(symbols_list);
+
     for (auto s : data_handler->symbols_list) {
         data_handler->update_bars(s);
         while (datetime->is_after(data_handler->get_latest_datetime(s))) {

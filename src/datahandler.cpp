@@ -179,3 +179,18 @@ void HistoricalCSVHandler::update_bars(std::string symbol) {
         events->push_back(new MarketEvent(e->date));
     }
 }
+
+void HistoricalCSVHandler::update_data(std::string symbol) {
+    std::string command = "python3 scripts/add_data.py " + symbol;
+    std::system(command.c_str());
+}
+
+void HistoricalCSVHandler::update_data(std::vector<std::string> symbols) {
+    std::string command = "python3 scripts/add_data.py";
+
+    for (std::string symbol : symbols) {
+        command += " " + symbol;
+    }
+
+    std::system(command.c_str());
+}

@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <fstream>
 #include <deque>
+#include <vector>
 
 #include "datetime.h"
 #include "entry.h"
@@ -145,6 +146,16 @@ class HistoricalCSVHandler : public DataHandler {
          * tuple format (vector) of (symbol, datetime, open, high, low, close, volume)
         */
         void update_bars(std::string symbol);
+
+        /**
+         * Updates csv data for a given symbol up to the current date
+        */
+        static void update_data(std::string symbol);
+
+        /**
+         * Updates csv data for a given list of symbols up to the current date
+        */
+        static void update_data(std::vector<std::string> symbols);
 };
 
 #endif
