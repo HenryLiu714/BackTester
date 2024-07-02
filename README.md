@@ -1,4 +1,7 @@
-This program is an event-driven backtesting environment meant to simulate the trading environment for the development of algorithmic trading strategies. The program is implemented in C++ and offers portfolio tracking and custom strategy implementation.
+This program is an event-driven backtesting environment meant to simulate the trading environment for the development of algorithmic trading strategies. The program is implemented in C++ and offers portfolio tracking and custom strategy implementation. A sample workflow of this program can be seen in the following diagram.
+
+![Workflow Diagram](images/flowchart.png)
+
 This implementation is based off of the approach offered in Michael Halls-Moore's book *Successful Algorithmic Trading*. 
 
 [Documentation](https://henryliu714.github.io/BackTester/documentation/html/index.html)
