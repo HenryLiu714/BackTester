@@ -2,7 +2,7 @@ This program is an event-driven backtesting environment meant to simulate the tr
 
 ![Workflow Diagram](images/flowchart.png)
 
-This implementation is based off of the approach offered in Michael Halls-Moore's book *Successful Algorithmic Trading*. 
+This implementation was initially based off of the approach offered in Michael Halls-Moore's book *Successful Algorithmic Trading*. 
 
 [Documentation](https://henryliu714.github.io/BackTester/documentation/html/index.html)
 ## Getting Started
