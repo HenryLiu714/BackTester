@@ -61,8 +61,7 @@ void Backtest::run_backtest() {
         data_handler->update_bars(s);
         while (datetime->is_after(data_handler->get_latest_datetime(s))) {
             data_handler->update_bars(s);
-        }
-            
+        }     
     }
 
     datetime = data_handler->get_latest_datetime(data_handler->symbols_list[0]);
@@ -83,7 +82,6 @@ void Backtest::run_backtest() {
 
             else if (event->type == "SIGNAL") {
                 signals++;
-                
                 portfolio->update_signal(event);
             }
 

@@ -33,7 +33,7 @@ class Portfolio {
         double value;
         double balance;
 
-        std::unordered_map<std::string, int> positions;
+        std::unordered_map<std::string, double> positions;
         std::unordered_map<std::string, double> holdings;
         /**
          * Portfolio constructor

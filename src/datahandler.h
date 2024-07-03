@@ -110,6 +110,9 @@ class HistoricalCSVHandler : public DataHandler {
         Entry* get_latest_bar(std::string symbol);
         /**
          * Generates the most recent bars of data for a given symbol
+         * 
+         * IMPORTANT: Does not include latest bar as to avoid look-ahead bias!
+         * 
          * @param  symbol                 : The symbol or key representing the data wanted
          * @param  N                      : The number of entries wanted, defaults to 1
          * @return {std::vector<Entry>*}  : A vector containing the entries, with the most recent at the end
@@ -134,6 +137,9 @@ class HistoricalCSVHandler : public DataHandler {
 
         /**
          * Generates the latest values in a given range
+         * 
+         * IMPORTANT: Does not include latest bar as to avoid look-ahead bias!
+         * 
          * @param  symbol                 : The symbol of the data we are looking for  
          * @param  val                    : One of "OPEN", "CLOSE", "HIGH", "LOW", "ADJ", "VOLUME"
          * @param  N                      : The number of values we need, defaults to 1

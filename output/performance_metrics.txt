@@ -2,16 +2,16 @@ Trading Strategy Overview
 -------------------------------
 
 Start Date:                 2004-08-19
-End Date:                   2013-02-19
+End Date:                   2024-07-02
 Starting Balance:           10000
-Final Balance:              89780.8
-Overall Performance [%]:    797.808
+Final Balance:              270420
+Overall Performance [%]:    2604.2
 Equity Initial [$]:         10000
-Equity Final [$]:           89780.8
-Equity Change [$]:          79780.8
-Maximum Equity [$]:         89780.8
-Minimum Equity [$]:         9792.92
-Maximum Drawdown [%]:       -24.468
-Maximum Drawdown Duration:  408 days
-Average Annual Return [%]:  45.4038
-Sharpe Ratio:               2.27804
+Equity Final [$]:           270420
+Equity Change [$]:          260420
+Maximum Equity [$]:         270783
+Minimum Equity [$]:         10000
+Maximum Drawdown [%]:       -37.669
+Maximum Drawdown Duration:  651 days
+Average Annual Return [%]:  27.209
+Sharpe Ratio:               1.99752

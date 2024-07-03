@@ -8,6 +8,12 @@ class Strategy {
     public:
         /**
          *  Should provide all necessary mechanisms for calculating signals
+         * 
+         * In order to prevent look-ahead bias, the function should assume
+         * that there is only access to the the "OPEN" price of the latest bar, as well
+         * as all past bars of data
+         * 
+         * @param bars            : DataHandler object providing bar data
          */
         virtual SignalEvent* calculate_signals(DataHandler* bars) = 0;
 };

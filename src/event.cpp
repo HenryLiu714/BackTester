@@ -34,7 +34,7 @@ SignalEvent::SignalEvent(std::string id_, std::string ticker_, Datetime* timesta
     strength = strength_;
 }
 
-OrderEvent::OrderEvent(std::string symbol_, bool order_type_, int quantity_, Datetime* timestamp, bool direction_) {
+OrderEvent::OrderEvent(std::string symbol_, bool order_type_, double quantity_, Datetime* timestamp, bool direction_) {
     type = "ORDER";
     symbol = symbol_;
     datetime = timestamp,
@@ -48,7 +48,7 @@ void OrderEvent::print_order() {
     << ", Quantity=" << quantity << ", Direction=" << direction << ", Time=" << datetime->to_string(); 
 }
 
-FillEvent::FillEvent(std::string symbol_, int quantity_, bool direction_, double fill_cost_, Datetime* datetime_, double commission_=0) {
+FillEvent::FillEvent(std::string symbol_, double quantity_, bool direction_, double fill_cost_, Datetime* datetime_, double commission_=0) {
     type = "FILL";
     symbol = symbol_;
     datetime = datetime_;

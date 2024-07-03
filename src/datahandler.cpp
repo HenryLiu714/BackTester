@@ -106,19 +106,19 @@ Entry* HistoricalCSVHandler::get_latest_bar(std::string symbol) {
 }
 
 std::vector<Entry*> HistoricalCSVHandler::get_latest_bars(std::string symbol, int N) {
-    if (entries.find(symbol) == entries.end()) {
+   if (entries.find(symbol) == entries.end()) {
         throw std::invalid_argument("Symbol not in symbols list: " + symbol);
         return std::vector<Entry*>();
     }
 
-    N = std::min((int) entries[symbol].size(), N);
+    N = std::min((int) entries[symbol].size(), N+1);
 
     if (N == 0) {
         throw std::invalid_argument("Symbol has no entries yet: " + symbol);
     }
 
     std::vector<Entry*> v;
-    for (int i = entries[symbol].size() - N; i < entries[symbol].size(); i++) {
+    for (int i = entries[symbol].size() - N; i < entries[symbol].size() - 1; i++) {
         v.push_back(entries[symbol][i]);
     }
     

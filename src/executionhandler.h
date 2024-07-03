@@ -6,6 +6,10 @@
 #include "event.h"
 
 /**
+ * TODO: Implement ExecutionHandler objects that account for slippage and flat broker commission (i.e. include a positive fill cost)
+ */
+
+/**
  * Abstract base class for ExecutionHandler objects
 */
 class ExecutionHandler {

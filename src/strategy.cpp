@@ -30,6 +30,10 @@ SignalEvent* MovingAverageCrossover::calculate_signals(DataHandler* bars) {
     double avg1 = arithmetic_mean(bars->get_latest_bar_vals(symbol, "ADJ", n1));
     double avg2 = arithmetic_mean(bars->get_latest_bar_vals(symbol, "ADJ", n2));
 
+    if (bars->get_latest_bar_vals(symbol, "ADJ", n1).size() < n1 || bars->get_latest_bar_vals(symbol, "ADJ", n2).size() < n2) {
+        return NULL;
+    }
+
     if (over && (avg1 < avg2)) {
         over = 0;
         return new SignalEvent(symbol, symbol, bars->get_latest_datetime(symbol), EXIT, 1);

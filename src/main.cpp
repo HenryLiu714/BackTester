@@ -16,7 +16,7 @@ void runTests() {
 void runBacktest() {
     MovingAverageCrossover* s = new MovingAverageCrossover(10, 20, "GOOG");
     Datetime* d = new Datetime("2004-08-19");
-    Backtest b = Backtest("GOOG", d, s, 10000, 0, 2140, 0.002);
+    Backtest b = Backtest("GOOG", d, s, 10000, 0, 1000000, 0.000);
     b.simulate_trading();
 }
 

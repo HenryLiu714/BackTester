@@ -61,11 +61,14 @@ class SignalEvent : public Event {
         SignalEvent(std::string id_, std::string ticker_, Datetime* timestamp_, int direction_, int strength_);
 };
 
+/**
+ * OrderEvent objects are created by the Portfolio
+ */
 class OrderEvent : public Event {
     public:
         std::string symbol;
         bool order_type;
-        int quantity;
+        double quantity;
         bool direction;
         
         /**
@@ -77,7 +80,7 @@ class OrderEvent : public Event {
          * @param  timestamp   : Datetime of the transaction
          * @param  direction_  : Direction of order, LONG or SHORT (0, 1) 
          */
-        OrderEvent(std::string symbol_, bool order_type_, int quantity_, Datetime* timestamp, bool direction_);
+        OrderEvent(std::string symbol_, bool order_type_, double quantity_, Datetime* timestamp, bool direction_);
         
         /**
          * Prints a string representation of the order to the terminal
@@ -85,10 +88,16 @@ class OrderEvent : public Event {
         void print_order();
 };
 
+/**
+ * FillEvent objects are created by the ExecutionHandler and executed
+ * by the Portfolio
+ * 
+ * Order fills are executed on the "OPEN" price of the latest bar as to avoid look-ahead bias
+ */
 class FillEvent : public Event {
     public:
         std::string symbol;
-        int quantity;
+        double quantity;
         bool direction;
         double fill_cost;
         double commission;
@@ -103,7 +112,7 @@ class FillEvent : public Event {
          * @param  datetime_   : Datetime of transaction
          * @param  commission_ : Fill commission in percent of total fill cost
          */
-        FillEvent(std::string symbol_, int quantity_, bool direction_, double fill_cost_, Datetime* datetime_, double commission_);
+        FillEvent(std::string symbol_, double quantity_, bool direction_, double fill_cost_, Datetime* datetime_, double commission_);
 };
 
 #endif
