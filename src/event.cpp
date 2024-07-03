@@ -45,7 +45,7 @@ OrderEvent::OrderEvent(std::string symbol_, bool order_type_, double quantity_, 
 
 void OrderEvent::print_order() {
     std::cout << "Order: Symbol=" << symbol << ", Type=" << order_type
-    << ", Quantity=" << quantity << ", Direction=" << direction << ", Time=" << datetime->to_string(); 
+    << ", Quantity=" << quantity << ", Direction=" << direction << ", Time=" << datetime->to_string() << std::endl; 
 }
 
 FillEvent::FillEvent(std::string symbol_, double quantity_, bool direction_, double fill_cost_, Datetime* datetime_, double commission_=0) {

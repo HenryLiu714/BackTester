@@ -56,14 +56,14 @@ void Portfolio::update_positions(FillEvent* f) {
 }
 
 void Portfolio::update_holdings(FillEvent* f) {
+        double orig_position = positions[f->symbol];
         update_positions(f);
 
         // Update holdings
         double market_value = bars->get_latest_bar_val(f->symbol, "OPEN");
-        double orig_holding = holdings[f->symbol];
         holdings[f->symbol] = positions[f->symbol] * market_value;
 
-        double total_cost = orig_holding - holdings[f->symbol];
+        double total_cost = (orig_position - positions[f->symbol]) * market_value;
         balance += total_cost;
 
         // Commission fee
@@ -74,7 +74,7 @@ void Portfolio::update_holdings(FillEvent* f) {
                 // Approximation for market value
                 double market_value = bars->get_latest_bar_val(s, "OPEN");
 
-                holdings[s] = (double) positions[s] * market_value;
+                holdings[s] = positions[s] * market_value;
                 total_value += holdings[s];
         }
 
@@ -92,6 +92,14 @@ OrderEvent* Portfolio::generate_naive_order(SignalEvent* e) {
         double mkt_quantity = balance / cur_price;
         double cur_quantity = positions[e->ticker];
         bool order_type = MKT;
+
+        double order_quantity = std::max(mkt_quantity, cur_quantity);
+
+        // Logging message to show orders being sent
+        if (order_quantity > 0) {
+                std::cout << "Generating order: " << bars->get_latest_datetime(e->ticker)->to_string_day() << ": " 
+                        << e->ticker << " at " << cur_price <<" for "<< mkt_quantity << " shares. Total cost: " << cur_price * mkt_quantity << std::endl;
+        }
 
         if (e->direction == LONG && cur_quantity == 0) return new OrderEvent(e->ticker, order_type, mkt_quantity, date, LONG);
         if (e->direction == SHORT && cur_quantity == 0) return new OrderEvent(e->ticker, order_type, mkt_quantity, date, SHORT);

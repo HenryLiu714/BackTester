@@ -16,13 +16,13 @@ void runTests() {
 void runBacktest() {
     MovingAverageCrossover* s = new MovingAverageCrossover(10, 20, "GOOG");
     Datetime* d = new Datetime("2004-08-19");
-    Backtest b = Backtest("GOOG", d, s, 10000, 0, 1000000, 0.000);
+    Backtest b = Backtest("GOOG", d, s, 10000, 0, 100000, 0.000);
     b.simulate_trading();
 }
 
 int main() {
     // runTests();
-    std::vector<std::string> tickers = {"TSLA", "SPY"};
+    std::vector<std::string> tickers = {"TSLA", "SPY", "AAPL", "RIVN", "JPM"};
     HistoricalCSVHandler::update_data(tickers);
     
     runBacktest();
